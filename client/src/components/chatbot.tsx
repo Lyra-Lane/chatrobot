@@ -2,21 +2,74 @@ import { useState } from "react";
 import { MessageSquare, Send, X, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useToast } from "@/hooks/use-toast";
 
 interface ChatMessage {
   role: 'user' | 'assistant';
   content: string;
 }
 
+// 免费的本地知识库
+const knowledgeBase = {
+  // 教育背景
+  education: "ManYao Li is currently a Statistics student at Beijing Normal University, specializing in Data Science and Natural Language Processing.",
+  
+  // 项目经验
+  projects: "His main research project involves Chinese sarcasm recognition using LLaMA-2 models. He has experience in data mining, machine learning, and statistical modeling.",
+  
+  // 技能
+  skills: "He specializes in Python, R, machine learning, natural language processing, data visualization, and statistical analysis.",
+  
+  // 联系方式
+  contact: "You can reach ManYao Li at manyaoli@berkeley.edu or through the contact form on this website.",
+  
+  // 研究兴趣
+  research: "His research interests include Natural Language Processing, Machine Learning, Statistical Modeling, and Data Science applications in social media analysis."
+};
+
+const getLocalResponse = (message: string): string => {
+  const lowerMessage = message.toLowerCase();
+  
+  // 教育相关
+  if (lowerMessage.includes('education') || lowerMessage.includes('university') || lowerMessage.includes('study') || lowerMessage.includes('学历') || lowerMessage.includes('大学')) {
+    return knowledgeBase.education;
+  }
+  
+  // 项目相关
+  if (lowerMessage.includes('project') || lowerMessage.includes('research') || lowerMessage.includes('sarcasm') || lowerMessage.includes('llama') || lowerMessage.includes('项目') || lowerMessage.includes('研究')) {
+    return knowledgeBase.projects;
+  }
+  
+  // 技能相关
+  if (lowerMessage.includes('skill') || lowerMessage.includes('programming') || lowerMessage.includes('python') || lowerMessage.includes('技能') || lowerMessage.includes('编程')) {
+    return knowledgeBase.skills;
+  }
+  
+  // 联系方式
+  if (lowerMessage.includes('contact') || lowerMessage.includes('email') || lowerMessage.includes('reach') || lowerMessage.includes('联系') || lowerMessage.includes('邮箱')) {
+    return knowledgeBase.contact;
+  }
+  
+  // 研究兴趣
+  if (lowerMessage.includes('interest') || lowerMessage.includes('nlp') || lowerMessage.includes('machine learning') || lowerMessage.includes('data science') || lowerMessage.includes('兴趣')) {
+    return knowledgeBase.research;
+  }
+  
+  // 问候
+  if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('你好') || lowerMessage.includes('您好')) {
+    return "Hello! I'm an AI assistant here to help you learn about ManYao Li. Feel free to ask about his education, projects, skills, or research interests.";
+  }
+  
+  // 默认回答
+  return "Thank you for your question! I can help you with information about ManYao Li's education at Beijing Normal University, his research projects (especially Chinese sarcasm recognition), his technical skills, or how to contact him. What would you like to know more about?";
+};
+
 export function ChatbotSearchBar() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
-  const { toast } = useToast();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
 
@@ -29,34 +82,12 @@ export function ChatbotSearchBar() {
     const newMessages = [...messages, { role: 'user' as const, content: userMessage }];
     setMessages(newMessages);
 
-    try {
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          message: userMessage,
-          context: "ManYao Li is a Statistics student at Beijing Normal University specializing in Data Science and Natural Language Processing. He has research experience in Chinese sarcasm recognition using LLaMA-2 models, data mining, and machine learning. His contact email is manyaoli@berkeley.edu."
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to get response');
-      }
-
-      const data = await response.json();
-      setMessages([...newMessages, { role: 'assistant', content: data.response }]);
-    } catch (error) {
-      console.error('Chat error:', error);
-      toast({
-        title: "Error",
-        description: "Failed to get response. Please try again or use the contact form.",
-        variant: "destructive"
-      });
-    } finally {
+    // Simulate AI thinking time
+    setTimeout(() => {
+      const aiResponse = getLocalResponse(userMessage);
+      setMessages([...newMessages, { role: 'assistant', content: aiResponse }]);
       setIsLoading(false);
-    }
+    }, 800);
   };
 
   if (!isExpanded) {
@@ -154,9 +185,8 @@ export function ChatbotFloatingButton() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const { toast } = useToast();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
 
@@ -167,34 +197,12 @@ export function ChatbotFloatingButton() {
     const newMessages = [...messages, { role: 'user' as const, content: userMessage }];
     setMessages(newMessages);
 
-    try {
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          message: userMessage,
-          context: "ManYao Li is a Statistics student at Beijing Normal University specializing in Data Science and Natural Language Processing. He has research experience in Chinese sarcasm recognition using LLaMA-2 models, data mining, and machine learning. His contact email is manyaoli@berkeley.edu."
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to get response');
-      }
-
-      const data = await response.json();
-      setMessages([...newMessages, { role: 'assistant', content: data.response }]);
-    } catch (error) {
-      console.error('Chat error:', error);
-      toast({
-        title: "Error",
-        description: "Failed to get response. Please try again.",
-        variant: "destructive"
-      });
-    } finally {
+    // Simulate AI thinking time
+    setTimeout(() => {
+      const aiResponse = getLocalResponse(userMessage);
+      setMessages([...newMessages, { role: 'assistant', content: aiResponse }]);
       setIsLoading(false);
-    }
+    }, 800);
   };
 
   return (
