@@ -1,0 +1,109 @@
+明白了，我帮你整理成纯文字的英文版PRD文档格式，方便你直接复制使用：
+
+---
+
+# Product Requirement Document (PRD)
+
+**Static Personal Website for ManYao Li**
+
+---
+
+## 1. Project Background
+
+The goal is to create a clean and professional static personal website to showcase ManYao Li’s resume and project experience, targeting data science job opportunities. The website will use a Morandi color palette combined with multi-block charts for a visually appealing and professional design.
+
+---
+
+## 2. Target Users
+
+* Recruiters and HR managers in the data science field
+* Potential collaborators and academic mentors
+* Industry peers and technology enthusiasts
+
+---
+
+## 3. Website Objectives
+
+* Clearly present key personal information and professional background
+* Intuitively display project experiences and technical skills
+* Provide easy access to resume download and contact information
+* Maintain a consistent visual style that enhances user experience and leaves a strong impression
+
+---
+
+## 4. Functional Modules
+
+### 4.1 Home
+
+* Brief introduction: name, major (Statistics at Beijing Normal University), current status, and job target (Data Science roles)
+* Engaging tagline (e.g., "Data-Driven Explorer of the Future" or "Unlocking Data Value with Statistics and Machine Learning")
+* Professional personal photo
+* Entry animation or subtle dynamic effects to enhance visual attraction
+
+### 4.2 About
+
+* Detailed background: educational experience, research interests, key skills
+* Career goals and development direction
+* Optional timeline or sectioned layout for clarity
+
+### 4.3 Projects
+
+* List key projects with:
+
+  * Project title
+  * Brief description
+  * Tech stack used (e.g., Python, Machine Learning, Data Analysis)
+  * Outcome presentation (screenshots, links, GitHub repositories)
+* Data visualization using multi-block charts consistent with Morandi colors
+
+### 4.4 Resume
+
+* Download button for PDF resume
+* Embedded online preview of the resume (via PDF viewer or webpage format)
+* Ensure resume is up-to-date and well formatted
+
+### 4.5 Contact
+
+* Display contact details: email, LinkedIn, GitHub, WeChat QR code
+* Simple contact form with basic validation (name, email, message)
+* Privacy notice indicating data is only used for contact purposes
+
+---
+
+## 5. Design & Technical Requirements
+
+* **Color scheme:** Morandi palette—soft, harmonious tones fitting a professional image
+* **Chart style:** Multi-block charts (bar, pie, progress rings) with colors matching Morandi theme to improve data visualization
+* **Responsive design:** Compatible with desktop, tablet, and mobile devices
+* **Animations:** Lightweight entrance animations on page load and module transitions to enhance interactivity
+* **Tech stack suggestion:** Pure static site with HTML + CSS (Flexbox/Grid layout) + JavaScript (for animations and form)
+* **Hosting:** Hosted on GitHub Pages for free and reliable deployment
+
+---
+
+## 6. Deliverables
+
+* Complete static website codebase
+* Project documentation including deployment and maintenance instructions
+* Resume PDF file
+* Image assets (photo, project screenshots, WeChat QR code)
+
+---
+
+## 7. Timeline
+
+| Date                     | Task                                            | Notes    |
+| ------------------------ | ----------------------------------------------- | -------- |
+| Requirement Confirmation | Review and finalize PRD                         | 1-2 days |
+| Design Phase             | Color scheme, layout, animation planning        | 2-3 days |
+| Development Phase        | Static pages coding, chart creation, animations | 4-5 days |
+| Testing Phase            | Cross-device testing, form validation           | 1-2 days |
+| Deployment               | GitHub Pages hosting, Replit integration        | 1 day    |
+
+---
+
+If you want, I can also help write a starter HTML/CSS template and sample Morandi color palettes or charts code for you.
+
+---
+
+请确认这份PRD是否满足你的需求，或有无需要补充修改的地方？
