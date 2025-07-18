@@ -31,8 +31,8 @@ jobs:
       - name: Install dependencies
         run: npm install
         
-      - name: Build project
-        run: npm run build
+      - name: Build frontend only
+        run: npx vite build
         
       - name: Prepare deployment files
         run: node scripts/prepare-deploy.js
