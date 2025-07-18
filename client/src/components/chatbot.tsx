@@ -1,235 +1,272 @@
-import { useEffect, useState, useRef } from "react";
-import { MessageSquare, Send, X } from "lucide-react";
+import { useState } from "react";
+import { MessageSquare, Send, X, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useToast } from "@/hooks/use-toast";
 
-declare global {
-  interface Window {
-    Mendable: {
-      initialize: (config: {
-        anon_key: string;
-        type: string;
-        elementId?: string;
-        [key: string]: any;
-      }) => void;
-    };
-  }
+interface ChatMessage {
+  role: 'user' | 'assistant';
+  content: string;
 }
 
 export function ChatbotSearchBar() {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [error, setError] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [input, setInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const { toast } = useToast();
 
-  useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
-    
-    const loadMendable = () => {
-      try {
-        // Load Mendable script with error handling
-        const script = document.createElement('script');
-        script.src = 'https://unpkg.com/@mendable/search@0.0.205/dist/umd/mendable-bundle.min.js';
-        script.async = true;
-        
-        script.onload = () => {
-          timeoutId = setTimeout(() => {
-            try {
-              if (window.Mendable && containerRef.current) {
-                window.Mendable.initialize({
-                  anon_key: 'fb00560b-a370-4bee-9b53-9c40c5a45976',
-                  type: "searchBar",
-                  elementId: "mendable-search-component",
-                  placeholder: "Ask me anything about ManYao Li...",
-                  dialogPlaceholder: "How can I help you today?",
-                  showSimpleSearch: true,
-                  color: {
-                    primary: "#B89B9B",
-                    secondary: "#A8B5A8",
-                  },
-                  style: {
-                    borderRadius: "8px",
-                  }
-                });
-                setIsLoaded(true);
-              }
-            } catch (err) {
-              console.warn("Mendable initialization failed:", err);
-              setError(true);
-            }
-          }, 500);
-        };
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!input.trim() || isLoading) return;
 
-        script.onerror = () => {
-          setError(true);
-        };
+    const userMessage = input.trim();
+    setInput("");
+    setIsLoading(true);
+    setIsExpanded(true);
 
-        document.head.appendChild(script);
-      } catch (err) {
-        setError(true);
-      }
-    };
+    // Add user message to chat
+    const newMessages = [...messages, { role: 'user' as const, content: userMessage }];
+    setMessages(newMessages);
 
-    loadMendable();
-
-    return () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-      // Clean up scripts
-      const scripts = document.querySelectorAll('script[src*="mendable"]');
-      scripts.forEach(script => {
-        if (script.parentNode) {
-          script.parentNode.removeChild(script);
-        }
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: userMessage,
+          context: "ManYao Li is a Statistics student at Beijing Normal University specializing in Data Science and Natural Language Processing. He has research experience in Chinese sarcasm recognition using LLaMA-2 models, data mining, and machine learning. His contact email is manyaoli@berkeley.edu."
+        }),
       });
-    };
-  }, []);
 
-  if (error) {
+      if (!response.ok) {
+        throw new Error('Failed to get response');
+      }
+
+      const data = await response.json();
+      setMessages([...newMessages, { role: 'assistant', content: data.response }]);
+    } catch (error) {
+      console.error('Chat error:', error);
+      toast({
+        title: "Error",
+        description: "Failed to get response. Please try again or use the contact form.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (!isExpanded) {
     return (
       <div className="w-full max-w-md mx-auto">
-        <div className="flex items-center space-x-2 p-4 border-2 border-[hsl(var(--morandi-sage))] rounded-lg bg-white">
+        <form onSubmit={handleSubmit} className="flex items-center space-x-2 p-4 border-2 border-[hsl(var(--morandi-sage))] rounded-lg bg-white hover:shadow-md transition-shadow">
           <MessageSquare className="text-[hsl(var(--morandi-sage))]" size={20} />
           <Input
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
             placeholder="Ask me anything about ManYao Li..."
             className="border-0 focus:ring-0 focus:outline-none"
-            disabled
+            disabled={isLoading}
           />
           <Button 
+            type="submit"
             size="sm" 
             className="bg-[hsl(var(--morandi-rose))] hover:opacity-80"
-            disabled
+            disabled={isLoading || !input.trim()}
           >
-            <Send size={16} />
+            {isLoading ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
           </Button>
-        </div>
-        <p className="text-xs text-gray-500 mt-2 text-center">
-          AI assistant temporarily unavailable. Please use the contact form below.
-        </p>
+        </form>
       </div>
     );
   }
 
   return (
-    <div className="w-full max-w-md mx-auto" ref={containerRef}>
-      <div id="mendable-search-component" className="mendable-search-bar"></div>
-      {!isLoaded && (
-        <div className="flex items-center space-x-2 p-4 border-2 border-[hsl(var(--morandi-sage))] rounded-lg bg-white animate-pulse">
-          <MessageSquare className="text-[hsl(var(--morandi-sage))]" size={20} />
-          <div className="flex-1 h-4 bg-gray-200 rounded"></div>
-          <div className="w-8 h-8 bg-gray-200 rounded"></div>
+    <div className="w-full max-w-2xl mx-auto">
+      <div className="bg-white rounded-lg border-2 border-[hsl(var(--morandi-sage))] shadow-lg">
+        <div className="flex justify-between items-center p-4 border-b">
+          <h3 className="font-medium text-gray-800">AI Assistant</h3>
+          <Button 
+            variant="ghost" 
+            size="sm"
+            onClick={() => {
+              setIsExpanded(false);
+              setMessages([]);
+            }}
+          >
+            <X size={16} />
+          </Button>
         </div>
-      )}
+        
+        <div className="h-64 overflow-y-auto p-4 space-y-4">
+          {messages.length === 0 && (
+            <p className="text-gray-500 text-center">Ask me anything about ManYao Li's background, projects, or experience!</p>
+          )}
+          {messages.map((message, index) => (
+            <div key={index} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+              <div className={`max-w-[80%] p-3 rounded-lg ${
+                message.role === 'user' 
+                  ? 'bg-[hsl(var(--morandi-rose))] text-white' 
+                  : 'bg-gray-100 text-gray-800'
+              }`}>
+                {message.content}
+              </div>
+            </div>
+          ))}
+          {isLoading && (
+            <div className="flex justify-start">
+              <div className="bg-gray-100 p-3 rounded-lg">
+                <Loader2 size={16} className="animate-spin" />
+              </div>
+            </div>
+          )}
+        </div>
+        
+        <form onSubmit={handleSubmit} className="p-4 border-t">
+          <div className="flex items-center space-x-2">
+            <Input
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Type your question..."
+              className="flex-1"
+              disabled={isLoading}
+            />
+            <Button 
+              type="submit"
+              size="sm" 
+              className="bg-[hsl(var(--morandi-rose))] hover:opacity-80"
+              disabled={isLoading || !input.trim()}
+            >
+              {isLoading ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
+            </Button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
 
 export function ChatbotFloatingButton() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [error, setError] = useState(false);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [input, setInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
 
-  useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
-    
-    const loadMendable = () => {
-      try {
-        const script = document.createElement('script');
-        script.src = 'https://unpkg.com/@mendable/search@0.0.205/dist/umd/mendable-bundle.min.js';
-        script.async = true;
-        
-        script.onload = () => {
-          timeoutId = setTimeout(() => {
-            try {
-              if (window.Mendable) {
-                window.Mendable.initialize({
-                  anon_key: 'fb00560b-a370-4bee-9b53-9c40c5a45976',
-                  type: "floatingButton",
-                  dialogPlaceholder: "Ask me anything about ManYao Li's background, projects, or experience...",
-                  showSimpleSearch: true,
-                  color: {
-                    primary: "#B89B9B",
-                    secondary: "#A8B5A8",
-                  },
-                  style: {
-                    borderRadius: "50%",
-                    position: "fixed",
-                    bottom: "20px",
-                    right: "20px",
-                    zIndex: 1000,
-                  },
-                  buttonStyle: {
-                    backgroundColor: "#B89B9B",
-                    color: "white",
-                  }
-                });
-                setIsLoaded(true);
-              }
-            } catch (err) {
-              console.warn("Mendable floating button failed:", err);
-              setError(true);
-            }
-          }, 1000);
-        };
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!input.trim() || isLoading) return;
 
-        script.onerror = () => {
-          setError(true);
-        };
+    const userMessage = input.trim();
+    setInput("");
+    setIsLoading(true);
 
-        document.head.appendChild(script);
-      } catch (err) {
-        setError(true);
+    const newMessages = [...messages, { role: 'user' as const, content: userMessage }];
+    setMessages(newMessages);
+
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: userMessage,
+          context: "ManYao Li is a Statistics student at Beijing Normal University specializing in Data Science and Natural Language Processing. He has research experience in Chinese sarcasm recognition using LLaMA-2 models, data mining, and machine learning. His contact email is manyaoli@berkeley.edu."
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to get response');
       }
-    };
 
-    loadMendable();
+      const data = await response.json();
+      setMessages([...newMessages, { role: 'assistant', content: data.response }]);
+    } catch (error) {
+      console.error('Chat error:', error);
+      toast({
+        title: "Error",
+        description: "Failed to get response. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-    return () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-    };
-  }, []);
-
-  if (error) {
-    return (
-      <div className="fixed bottom-6 right-6 z-50">
-        <Button
-          onClick={() => setIsOpen(!isOpen)}
-          className="w-14 h-14 rounded-full bg-[hsl(var(--morandi-rose))] hover:opacity-80 shadow-lg"
-        >
-          <MessageSquare className="text-white" size={24} />
-        </Button>
-        
-        {isOpen && (
-          <div className="absolute bottom-16 right-0 w-80 bg-white rounded-lg shadow-xl border p-4">
-            <div className="flex justify-between items-center mb-3">
-              <h3 className="font-medium text-gray-800">AI Assistant</h3>
-              <Button 
-                variant="ghost" 
-                size="sm"
-                onClick={() => setIsOpen(false)}
-              >
-                <X size={16} />
-              </Button>
-            </div>
-            <p className="text-sm text-gray-600 mb-3">
-              AI assistant is temporarily unavailable. Please use the contact form to reach out directly.
-            </p>
+  return (
+    <div className="fixed bottom-6 right-6 z-50">
+      <Button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-14 h-14 rounded-full bg-[hsl(var(--morandi-rose))] hover:opacity-80 shadow-lg"
+      >
+        <MessageSquare className="text-white" size={24} />
+      </Button>
+      
+      {isOpen && (
+        <div className="absolute bottom-16 right-0 w-96 bg-white rounded-lg shadow-xl border">
+          <div className="flex justify-between items-center p-4 border-b">
+            <h3 className="font-medium text-gray-800">AI Assistant</h3>
             <Button 
+              variant="ghost" 
+              size="sm"
               onClick={() => {
                 setIsOpen(false);
-                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                setMessages([]);
               }}
-              className="w-full bg-[hsl(var(--morandi-rose))] hover:opacity-80"
             >
-              Go to Contact Form
+              <X size={16} />
             </Button>
           </div>
-        )}
-      </div>
-    );
-  }
-
-  return null;
+          
+          <div className="h-64 overflow-y-auto p-4 space-y-3">
+            {messages.length === 0 && (
+              <p className="text-gray-500 text-sm text-center">Ask me anything about ManYao Li!</p>
+            )}
+            {messages.map((message, index) => (
+              <div key={index} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                <div className={`max-w-[80%] p-2 text-sm rounded-lg ${
+                  message.role === 'user' 
+                    ? 'bg-[hsl(var(--morandi-rose))] text-white' 
+                    : 'bg-gray-100 text-gray-800'
+                }`}>
+                  {message.content}
+                </div>
+              </div>
+            ))}
+            {isLoading && (
+              <div className="flex justify-start">
+                <div className="bg-gray-100 p-2 rounded-lg">
+                  <Loader2 size={14} className="animate-spin" />
+                </div>
+              </div>
+            )}
+          </div>
+          
+          <form onSubmit={handleSubmit} className="p-4 border-t">
+            <div className="flex items-center space-x-2">
+              <Input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Type your question..."
+                className="flex-1 text-sm"
+                disabled={isLoading}
+              />
+              <Button 
+                type="submit"
+                size="sm" 
+                className="bg-[hsl(var(--morandi-rose))] hover:opacity-80"
+                disabled={isLoading || !input.trim()}
+              >
+                {isLoading ? <Loader2 size={14} className="animate-spin" /> : <Send size={14} />}
+              </Button>
+            </div>
+          </form>
+        </div>
+      )}
+    </div>
+  );
 }

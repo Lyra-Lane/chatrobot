@@ -7,10 +7,11 @@ This is a modern, responsive personal website for ManYao Li, a Statistics studen
 **Status**: ✅ Ready for GitHub Pages deployment with complete static build files, automated CI/CD workflow, and integrated AI chatbot.
 
 ### Recent Updates (July 18, 2025)
-- ✅ Added Mendable AI chatbot integration with dual interfaces
-- ✅ Implemented floating chat button for persistent access
-- ✅ Added search bar interface in contact section
-- ✅ Customized chatbot styling to match Morandi color scheme
+- ✅ Replaced Mendable with custom Perplexity AI chatbot integration
+- ✅ Created dual chat interfaces: search bar and floating button
+- ✅ Built backend API endpoint (/api/chat) for AI responses
+- ✅ Implemented error handling and loading states
+- ✅ Added context-aware responses about ManYao Li's background
 - ✅ Updated professional photo to latest version
 
 ## User Preferences
