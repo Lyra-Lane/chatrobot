@@ -1,0 +1,50 @@
+The above error occurred in the <gk> component:
+
+    at gk (https://unpkg.com/@mendable/search@0.0.205/dist/umd/mendable-bundle.min.js:62:212025)
+    at div
+    at vk (https://unpkg.com/@mendable/search@0.0.205/dist/umd/mendable-bundle.min.js:62:213011)
+    at div
+    at div
+    at div
+    at jk (https://unpkg.com/@mendable/search@0.0.205/dist/umd/mendable-bundle.min.js:62:232294)
+    at div
+    at Bk (https://unpkg.com/@mendable/search@0.0.205/dist/umd/mendable-bundle.min.js:62:252555)
+    at Gk (https://unpkg.com/@mendable/search@0.0.205/dist/umd/mendable-bundle.min.js:62:260095)
+    at div
+    at div
+    at div
+    at div
+    at div
+    at div
+    at Vl (https://unpkg.com/@mendable/search@0.0.205/dist/umd/mendable-bundle.min.js:47:159851)
+    at div
+    at div
+    at https://unpkg.com/@mendable/search@0.0.205/dist/umd/mendable-bundle.min.js:30:202837
+    at st (https://unpkg.com/@mendable/search@0.0.205/dist/umd/mendable-bundle.min.js:30:187420)
+    at https://unpkg.com/@mendable/search@0.0.205/dist/umd/mendable-bundle.min.js:30:206458
+    at https://unpkg.com/@mendable/search@0.0.205/dist/umd/mendable-bundle.min.js:30:210261
+    at div
+    at div
+    at div
+    at div
+    at https://unpkg.com/@mendable/search@0.0.205/dist/umd/mendable-bundle.min.js:30:188841
+    at https://unpkg.com/@mendable/search@0.0.205/dist/umd/mendable-bundle.min.js:30:200659
+    at _t (https://unpkg.com/@mendable/search@0.0.205/dist/umd/mendable-bundle.min.js:30:191893)
+    at https://unpkg.com/@mendable/search@0.0.205/dist/umd/mendable-bundle.min.js:30:193166
+    at https://unpkg.com/@mendable/search@0.0.205/dist/umd/mendable-bundle.min.js:30:191963
+    at _t (https://unpkg.com/@mendable/search@0.0.205/dist/umd/mendable-bundle.min.js:30:191893)
+    at Ft (https://unpkg.com/@mendable/search@0.0.205/dist/umd/mendable-bundle.min.js:30:193979)
+    at https://unpkg.com/@mendable/search@0.0.205/dist/umd/mendable-bundle.min.js:30:197778
+    at st (https://unpkg.com/@mendable/search@0.0.205/dist/umd/mendable-bundle.min.js:30:187420)
+    at https://unpkg.com/@mendable/search@0.0.205/dist/umd/mendable-bundle.min.js:30:206458
+    at https://unpkg.com/@mendable/search@0.0.205/dist/umd/mendable-bundle.min.js:30:209261
+    at div
+    at Kk (https://unpkg.com/@mendable/search@0.0.205/dist/umd/mendable-bundle.min.js:62:272617)
+    at div
+    at Ox (https://unpkg.com/@mendable/search@0.0.205/dist/umd/mendable-bundle.min.js:68:22355)
+    at Nx (https://unpkg.com/@mendable/search@0.0.205/dist/umd/mendable-bundle.min.js:68:35358)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+Script error.
+PostHog error: Implementation error. Please turn on debug and contact support@posthog.com.

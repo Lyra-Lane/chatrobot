@@ -5,7 +5,6 @@ import ProjectsSection from "@/components/projects-section";
 import ResumeSection from "@/components/resume-section";
 import ContactSection from "@/components/contact-section";
 import Footer from "@/components/footer";
-import { ChatbotFloatingButton } from "@/components/chatbot";
 
 export default function Home() {
   return (
@@ -17,7 +16,6 @@ export default function Home() {
       <ResumeSection />
       <ContactSection />
       <Footer />
-      <ChatbotFloatingButton />
     </div>
   );
 }
