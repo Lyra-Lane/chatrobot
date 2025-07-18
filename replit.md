@@ -7,13 +7,13 @@ This is a modern, responsive personal website for ManYao Li, a Statistics studen
 **Status**: ✅ Ready for GitHub Pages deployment with fixed static build files, automated CI/CD workflow, and local knowledge-base chatbot.
 
 ### Recent Updates (July 18, 2025)
-- ✅ Completely fixed GitHub Pages deployment issues
+- ✅ Fixed GitHub Actions workflow with proper npm install and build
+- ✅ Created comprehensive deployment testing script
+- ✅ Completely resolved GitHub Pages deployment issues
 - ✅ Added .nojekyll file to prevent Jekyll processing
 - ✅ Created 404.html for SPA routing support
-- ✅ Generated optimized deployment script with full validation
 - ✅ Replaced Mendable with free local knowledge-base chatbot
-- ✅ Implemented intelligent FAQ system with Chinese/English support
-- ✅ Added comprehensive deployment troubleshooting guide
+- ✅ Validated entire build process with automated tests
 
 ## User Preferences
 

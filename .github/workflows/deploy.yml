@@ -29,15 +29,13 @@ jobs:
           cache: 'npm'
           
       - name: Install dependencies
-        run: npm ci
+        run: npm install
         
-      - name: Build and prepare deployment
-        run: |
-          # Build the frontend
-          npx vite build
-          
-          # Run deployment preparation script
-          node scripts/prepare-deploy.js
+      - name: Build project
+        run: npm run build
+        
+      - name: Prepare deployment files
+        run: node scripts/prepare-deploy.js
         
       - name: Setup Pages
         uses: actions/configure-pages@v4

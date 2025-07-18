@@ -22,10 +22,12 @@ GitHub Pages部署失败的原因是资源路径不正确：
 ## 本地测试部署
 
 ```bash
-# 1. 构建静态文件
-npx vite build
+# 1. 完整构建测试（模拟GitHub Actions）
+./scripts/test-github-actions.sh
 
-# 2. 准备部署文件
+# 2. 或者手动步骤：
+npm install
+npm run build
 node scripts/prepare-deploy.js
 
 # 3. 验证生成的文件
