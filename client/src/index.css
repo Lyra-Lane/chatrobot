@@ -1,0 +1,149 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(0, 0%, 29%);
+  --muted: hsl(60, 4.8%, 95.9%);
+  --muted-foreground: hsl(25, 5.3%, 44.7%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(0, 0%, 29%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(0, 0%, 29%);
+  --border: hsl(20, 5.9%, 90%);
+  --input: hsl(20, 5.9%, 90%);
+  --primary: hsl(207, 90%, 54%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(60, 4.8%, 95.9%);
+  --secondary-foreground: hsl(24, 9.8%, 10%);
+  --accent: hsl(60, 4.8%, 95.9%);
+  --accent-foreground: hsl(24, 9.8%, 10%);
+  --destructive: hsl(0, 84.2%, 60.2%);
+  --destructive-foreground: hsl(60, 9.1%, 97.8%);
+  --ring: hsl(20, 14.3%, 4.1%);
+  --radius: 0.5rem;
+  
+  /* Morandi Color Palette */
+  --morandi-rose: hsl(0, 15%, 72%);
+  --morandi-sage: hsl(120, 10%, 70%);
+  --morandi-beige: hsl(40, 20%, 78%);
+  --morandi-cream: hsl(40, 15%, 95%);
+  --morandi-gray: hsl(0, 0%, 29%);
+  --morandi-light: hsl(40, 10%, 90%);
+}
+
+.dark {
+  --background: hsl(240, 10%, 3.9%);
+  --foreground: hsl(0, 0%, 98%);
+  --muted: hsl(240, 3.7%, 15.9%);
+  --muted-foreground: hsl(240, 5%, 64.9%);
+  --popover: hsl(240, 10%, 3.9%);
+  --popover-foreground: hsl(0, 0%, 98%);
+  --card: hsl(240, 10%, 3.9%);
+  --card-foreground: hsl(0, 0%, 98%);
+  --border: hsl(240, 3.7%, 15.9%);
+  --input: hsl(240, 3.7%, 15.9%);
+  --primary: hsl(207, 90%, 54%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(240, 3.7%, 15.9%);
+  --secondary-foreground: hsl(0, 0%, 98%);
+  --accent: hsl(240, 3.7%, 15.9%);
+  --accent-foreground: hsl(0, 0%, 98%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(240, 4.9%, 83.9%);
+  --radius: 0.5rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  .morandi-rose {
+    color: hsl(var(--morandi-rose));
+  }
+  
+  .bg-morandi-rose {
+    background-color: hsl(var(--morandi-rose));
+  }
+  
+  .morandi-sage {
+    color: hsl(var(--morandi-sage));
+  }
+  
+  .bg-morandi-sage {
+    background-color: hsl(var(--morandi-sage));
+  }
+  
+  .morandi-beige {
+    color: hsl(var(--morandi-beige));
+  }
+  
+  .bg-morandi-beige {
+    background-color: hsl(var(--morandi-beige));
+  }
+  
+  .morandi-cream {
+    color: hsl(var(--morandi-cream));
+  }
+  
+  .bg-morandi-cream {
+    background-color: hsl(var(--morandi-cream));
+  }
+  
+  .morandi-gray {
+    color: hsl(var(--morandi-gray));
+  }
+  
+  .bg-morandi-gray {
+    background-color: hsl(var(--morandi-gray));
+  }
+  
+  .morandi-light {
+    color: hsl(var(--morandi-light));
+  }
+  
+  .bg-morandi-light {
+    background-color: hsl(var(--morandi-light));
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes pulse-gentle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.6s ease-out;
+}
+
+.animate-pulse-gentle {
+  animation: pulse-gentle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
