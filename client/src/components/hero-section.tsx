@@ -1,6 +1,6 @@
 import { TrendingUp } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
-import professionalPhoto from "@assets/证件照（长发）_1752796334978.jpg";
+import professionalPhoto from "@assets/证件照（长发）_1752797393618.jpg";
 
 export default function HeroSection() {
   const { ref, isVisible } = useScrollAnimation();
