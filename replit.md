@@ -4,7 +4,14 @@
 
 This is a modern, responsive personal website for ManYao Li, a Statistics student at Beijing Normal University specializing in Data Science and Natural Language Processing. The site is built as a static personal portfolio showcasing academic background, research projects, and professional experience to attract data science job opportunities.
 
-**Status**: ✅ Ready for GitHub Pages deployment with complete static build files and automated CI/CD workflow.
+**Status**: ✅ Ready for GitHub Pages deployment with complete static build files, automated CI/CD workflow, and integrated AI chatbot.
+
+### Recent Updates (July 18, 2025)
+- ✅ Added Mendable AI chatbot integration with dual interfaces
+- ✅ Implemented floating chat button for persistent access
+- ✅ Added search bar interface in contact section
+- ✅ Customized chatbot styling to match Morandi color scheme
+- ✅ Updated professional photo to latest version
 
 ## User Preferences
 

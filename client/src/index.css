@@ -147,3 +147,45 @@
 .animate-pulse-gentle {
   animation: pulse-gentle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
+
+/* Mendable Chatbot Custom Styles */
+.mendable-search-bar {
+  border-radius: 8px !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+}
+
+.mendable-search-bar input {
+  border: 2px solid hsl(var(--morandi-light)) !important;
+  border-radius: 8px !important;
+  padding: 12px 16px !important;
+  font-family: 'Inter', sans-serif !important;
+  transition: border-color 0.3s ease !important;
+}
+
+.mendable-search-bar input:focus {
+  border-color: hsl(var(--morandi-rose)) !important;
+  box-shadow: 0 0 0 3px hsla(var(--morandi-rose), 0.1) !important;
+  outline: none !important;
+}
+
+.mendable-search-bar button {
+  background-color: hsl(var(--morandi-rose)) !important;
+  border-radius: 6px !important;
+  transition: background-color 0.3s ease !important;
+}
+
+.mendable-search-bar button:hover {
+  background-color: hsl(var(--morandi-sage)) !important;
+}
+
+/* Floating Button Styles */
+.mendable-floating-button {
+  background-color: hsl(var(--morandi-rose)) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  transition: all 0.3s ease !important;
+}
+
+.mendable-floating-button:hover {
+  background-color: hsl(var(--morandi-sage)) !important;
+  transform: scale(1.05) !important;
+}

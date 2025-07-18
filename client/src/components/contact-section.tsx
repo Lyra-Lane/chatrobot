@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
+import { ChatbotSearchBar } from "./chatbot";
 
 const contactFormSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -97,7 +98,16 @@ export default function ContactSection() {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold morandi-gray mb-4">Get In Touch</h2>
-          <p className="text-xl text-[hsl(var(--morandi-sage))]">Let's connect and explore opportunities together</p>
+          <p className="text-xl text-[hsl(var(--morandi-sage))] mb-8">Let's connect and explore opportunities together</p>
+          
+          {/* AI Assistant Search Bar */}
+          <div className="mb-12">
+            <h3 className="text-lg font-medium morandi-gray mb-4">Ask My AI Assistant</h3>
+            <p className="text-sm text-[hsl(var(--morandi-sage))] mb-4">
+              Get instant answers about my background, projects, and experience
+            </p>
+            <ChatbotSearchBar />
+          </div>
         </div>
         
         <div className="grid md:grid-cols-2 gap-12">
