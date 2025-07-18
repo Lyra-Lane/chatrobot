@@ -4,6 +4,8 @@
 
 This is a modern, responsive personal website for ManYao Li, a Statistics student at Beijing Normal University specializing in Data Science and Natural Language Processing. The site is built as a static personal portfolio showcasing academic background, research projects, and professional experience to attract data science job opportunities.
 
+**Status**: ✅ Ready for GitHub Pages deployment with complete static build files and automated CI/CD workflow.
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
