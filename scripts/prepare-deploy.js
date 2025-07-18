@@ -29,6 +29,14 @@ fs.mkdirSync(deployDir, { recursive: true });
 console.log('📁 复制构建文件...');
 fs.cpSync(distPublicDir, deployDir, { recursive: true });
 
+// 复制404.html文件（如果存在）
+const source404 = path.join(projectRoot, 'client', 'public', '404.html');
+const dest404 = path.join(deployDir, '404.html');
+if (fs.existsSync(source404)) {
+  fs.copyFileSync(source404, dest404);
+  console.log('📄 已复制404.html');
+}
+
 // 4. 修复index.html中的资源路径
 const indexPath = path.join(deployDir, 'index.html');
 if (fs.existsSync(indexPath)) {
@@ -55,7 +63,12 @@ if (fs.existsSync(indexPath)) {
   process.exit(1);
 }
 
-// 5. 验证文件结构
+// 5. 添加.nojekyll文件以禁用Jekyll处理
+const nojekyllPath = path.join(deployDir, '.nojekyll');
+fs.writeFileSync(nojekyllPath, '');
+console.log('✅ 已添加.nojekyll文件');
+
+// 6. 验证文件结构
 console.log('🔍 验证部署文件...');
 const files = fs.readdirSync(deployDir);
 console.log('部署目录内容:', files);
