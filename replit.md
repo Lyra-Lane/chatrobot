@@ -4,14 +4,14 @@
 
 This is a modern, responsive personal website for ManYao Li, a Statistics student at Beijing Normal University specializing in Data Science and Natural Language Processing. The site is built as a static personal portfolio showcasing academic background, research projects, and professional experience to attract data science job opportunities.
 
-**Status**: ✅ Ready for GitHub Pages deployment with complete static build files, automated CI/CD workflow, and integrated AI chatbot.
+**Status**: ✅ Ready for GitHub Pages deployment with fixed static build files, automated CI/CD workflow, and local knowledge-base chatbot.
 
 ### Recent Updates (July 18, 2025)
-- ✅ Replaced Mendable with custom Perplexity AI chatbot integration
-- ✅ Created dual chat interfaces: search bar and floating button
-- ✅ Built backend API endpoint (/api/chat) for AI responses
-- ✅ Implemented error handling and loading states
-- ✅ Added context-aware responses about ManYao Li's background
+- ✅ Replaced Mendable with free local knowledge-base chatbot
+- ✅ Fixed GitHub Pages deployment with correct asset paths
+- ✅ Created automated deployment script (scripts/prepare-deploy.js)
+- ✅ Implemented intelligent FAQ system with Chinese/English support
+- ✅ Added dual chat interfaces: search bar and floating button
 - ✅ Updated professional photo to latest version
 
 ## User Preferences
